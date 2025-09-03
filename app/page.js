@@ -138,7 +138,7 @@ function HeroPreview(){
       </div>
       <div className="rounded-xl border border-white/10 bg-gradient-to-br from-blue-500/20 to-fuchsia-500/10 p-4">
         <div className="text-xs text-slate-300">Zoom → GPT → Asana</div>
-        <div className="mt-1 font-medium">3 tasks created in "Action Items"</div>
+        <div className="mt-2 text-xs text-slate-400">3 tasks created in &quot;Action Items&quot;</div>
         <div className="mt-2 text-xs text-slate-400">Decisions captured; owners assigned.</div>
       </div>
     </div>
