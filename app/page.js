@@ -107,7 +107,7 @@ function Landing({ setRoute, user }){
           <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight">AI automations that <span className="text-blue-400">draft, triage,</span> and <span className="text-emerald-400">assign</span> in minutes.</h1>
           <p className="mt-4 text-slate-300">BottleKit AI is a plug‑and‑play kit of three Zapier + GPT automations that connect your existing stack: HubSpot → Gmail, Zendesk → Slack, Zoom → Asana. No rebuild. No BS.</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href="https://buy.stripe.com/test_6oU5kE6IK976fK822d4wM00" target="_blank" rel="noreferrer" className="inline-flex items-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold shadow hover:bg-blue-500 active:translate-y-px">Buy now <ArrowRight className="ml-2 h-4 w-4" /></a>
+            <a href="https://buy.stripe.com/5kQeVe3w1g6f3vnfyWbwk00" target="_blank" rel="noopener noreferrer" className="inline-flex items-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold shadow hover:bg-blue-500 active:translate-y-px">Buy now <ArrowRight className="ml-2 h-4 w-4" /></a>
             <button onClick={()=>setRoute("dashboard")} className="inline-flex items-center rounded-xl px-4 py-2.5 text-sm font-semibold border border-white/10 hover:bg-white/10"><PlayCircle className="mr-2 h-4 w-4"/> See the kit</button>
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-400">
