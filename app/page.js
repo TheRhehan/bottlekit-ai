@@ -5,15 +5,16 @@ import { Zap, FileText, PlayCircle, Table2, Lock, CheckCircle2, Sparkles, LogIn,
 
 // ---------- Mock data (replace with your Google Sheet later) ----------
 const MOCK_RESOURCES = [
-  { id: 1, title: "Email‑Drafter Zap", type: "zap", url: "https://zapier.com/shared/REPLACE_EMAIL_DRAFTER", desc: "Draft replies from HubSpot notes in seconds.", sort: 1, group: "paid" },
-  { id: 2, title: "Ticket‑Triage Zap", type: "zap", url: "https://zapier.com/shared/REPLACE_TICKET_TRIAGE", desc: "Summarize, set P1–P3, alert Slack.", sort: 2, group: "paid" },
-  { id: 3, title: "Minutes Bot Zap", type: "zap", url: "https://zapier.com/shared/REPLACE_MINUTES_BOT", desc: "Turn Zoom transcripts into Asana tasks.", sort: 3, group: "paid" },
-  { id: 4, title: "Quick‑Start: Email‑Drafter", type: "pdf", url: "https://drive.google.com/file/d/REPLACE_QS_EMAIL", desc: "2‑page setup checklist.", sort: 4, group: "paid" },
-  { id: 5, title: "Quick‑Start: Ticket‑Triage", type: "pdf", url: "https://drive.google.com/file/d/REPLACE_QS_TICKETS", desc: "2‑page setup checklist.", sort: 5, group: "paid" },
-  { id: 6, title: "Quick‑Start: Minutes Bot", type: "pdf", url: "https://drive.google.com/file/d/REPLACE_QS_MINUTES", desc: "2‑page setup checklist.", sort: 6, group: "paid" },
-  { id: 7, title: "Loom Tutorial – Overview (0:45)", type: "video", url: "https://www.loom.com/share/REPLACE_OVERVIEW", desc: "See the 3 wins, fast.", sort: 7, group: "paid" },
-  { id: 8, title: "Loom – Ticket‑Triage", type: "video", url: "https://www.loom.com/share/REPLACE_TICKETS", desc: "Zendesk → Slack in action.", sort: 8, group: "paid" },
-  { id: 9, title: "ROI Calculator", type: "sheet", url: "https://docs.google.com/spreadsheets/d/REPLACE_ROI", desc: "Estimate hours & $$ saved.", sort: 9, group: "paid" },
+  { id: 1, title: "Email‑Drafter Zap", type: "zap", url: "https://zapier.com/shared/a1069af5783b0ed010ef9a6a95d3790cff028594", desc: "Draft replies from HubSpot notes in seconds.", sort: 1, group: "paid" },
+  { id: 2, title: "Ticket‑Triage Zap", type: "zap", url: "https://zapier.com/shared/80d11bf46db39d1a253079845a8bc308720c86a4", desc: "Summarize, set P1–P3, alert Slack.", sort: 2, group: "paid" },
+  { id: 3, title: "Minutes Bot Zap", type: "zap", url: "https://zapier.com/shared/80747cc7d68fef7c91f3d8350bcedc728572ec62", desc: "Turn Zoom transcripts into Asana tasks.", sort: 3, group: "paid" },
+  { id: 4, title: "Quick‑Start: Email‑Drafter", type: "pdf", url: "https://drive.google.com/file/d/1XnSlamDdMrKkLMxmM7YCnHDGYKHu1ur-/view?usp=sharing", desc: "2‑page setup checklist.", sort: 4, group: "paid" },
+  { id: 5, title: "Quick‑Start: Ticket‑Triage", type: "pdf", url: "https://drive.google.com/file/d/1RPeWl-BXa4VYNdLyV1gdPJnTdjZM_6Q2/view?usp=sharing", desc: "2‑page setup checklist.", sort: 5, group: "paid" },
+  { id: 6, title: "Quick‑Start: Minutes Bot", type: "pdf", url: "https://drive.google.com/file/d/1UQwMdqb_cWpddWPSBt-wuJlrhpDnt17F/view?usp=sharing", desc: "2‑page setup checklist.", sort: 6, group: "paid" },
+  { id: 7, title: "Loom Tutorial - Email Drafter", type: "video", url: "https://www.loom.com/share/b6bd919be075401495293a6959c8cc90?sid=ceb90a6c-9cc9-4cc8-ae7c-ad3339423562", desc: "Short walkthrough.", sort: 7, group: "paid" },
+  { id: 8, title: "Loom – Ticket‑Triage", type: "video", url: "https://www.loom.com/share/03849fc57c9545b4a9bbc8e1df1aa272?sid=47266b14-77c5-47bc-80ea-5cb895c0159f", desc: "Zendesk → Slack in action.", sort: 8, group: "paid" },
+  { id: 9, title: "Loom Tutorial - Minutes Bot", type: "video", url: "https://www.loom.com/share/8066bc82f3a542f8a43714bd0982523b?sid=4f2055d5-ed9d-4f7d-9d2a-6ca9a6f61456", desc: "Short walkthrough.", sort: 9, group: "paid" },
+  { id: 10, title: "ROI Calculator", type: "sheet", url: "https://docs.google.com/spreadsheets/d/1tDWoQfRtlBnBBgkxubew4bTq78p22JQuXzufNskWyD4/edit?usp=sharing", desc: "Estimate hours & $$ saved.", sort: 10, group: "paid" },
 ];
 
 // ---------- Small helpers ----------
