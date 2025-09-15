@@ -313,12 +313,14 @@ function Auth({ type = 'login', onSuccess }) {
 }
 
 function Dashboard({ isPaid, grantPaid }) {
-  const sheetRows = useResources();
+  // use the live rows from the sheet
+  const rows = useResources();
 
-  // Use LIVE rows (not mock). Keep only "paid" content if desired.
-  const resources = useMemo(() => {
-    return [...sheetRows].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0) || a.title.localeCompare(b.title));
-  }, [sheetRows]);
+  // sort and (optionally) hide paid items if not paid
+  const resources = React.useMemo(() => {
+    const sorted = [...rows].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
+    return isPaid ? sorted : sorted.filter(r => (r.group || '').toLowerCase() !== 'paid');
+  }, [rows, isPaid]);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
