@@ -313,96 +313,59 @@ function Auth({ type = 'login', onSuccess }) {
 }
 
 function Dashboard({ isPaid, grantPaid }) {
-  // use the live rows from the sheet
-  const rows = useResources();
+  // --- live rows from Google Sheet ---
+  const rows = useResources() || [];
 
-  // sort and (optionally) hide paid items if not paid
-  const resources = React.useMemo(() => {
-    const sorted = [...rows].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
-    return isPaid ? sorted : sorted.filter(r => (r.group || '').toLowerCase() !== 'paid');
-  }, [rows, isPaid]);
+  // normalize + sort; accept either 'link' or 'url' header
+  const items = rows
+    .map((r) => ({
+      id: String(r.id ?? ""),
+      title: r.title ?? "",
+      type: r.type ?? "",
+      href: (r.link || r.url || "").trim(),  // ← KEY: from Sheet, no placeholders
+      desc: r.desc ?? "",
+      sort: Number(r.sort) || 0,
+      group: r.group ?? "",
+    }))
+    .filter((x) => x.title && x.href) // drop any without a link
+    .sort((a, b) => a.sort - b.sort);
+
+  // fail loudly if anything is missing (helps catch bad data instead of silent '#')
+  if (items.some((x) => !x.href)) {
+    const bad = items.filter((x) => !x.href).map((x) => x.title).join(", ");
+    throw new Error(`Missing href for: ${bad}`);
+  }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">Your AI Kit</h2>
-        {!isPaid ? (
-          <button
-            onClick={grantPaid}
-            className="rounded-xl bg-emerald-600/20 px-3 py-1.5 text-xs font-semibold border border-emerald-600/30"
-            title="Demo toggle"
-          >
-            <Lock className="h-4 w-4 inline mr-1" /> Grant Paid (demo)
-          </button>
-        ) : (
-          <div className="text-emerald-300 text-xs flex items-center gap-1">
-            <CheckCircle2 className="h-4 w-4" /> Paid access active
-          </div>
-        )}
-      </div>
+    <main className="p-6 max-w-5xl mx-auto">
+      <h1 className="text-2xl font-semibold mb-4">BottleKit AI</h1>
 
-      {/* Info note: tells you data is live from the Sheet */}
-      <div className="text-xs text-slate-400 mb-4">
-        In production, this content is fed by your Google Sheet (<code>KitResources</code> tab). Edit
-        rows to update instantly.
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {resources.map((r) => (
-          <article
-            key={r.id ?? r.title}
-            className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.04] transition"
-          >
-            <div className="flex items-center justify-between p-4">
-              <span className="inline-flex items-center gap-2">
-                {typeToIcon(r.type)}
-                <span className="font-medium leading-snug">{r.title}</span>
-              </span>
-
-              <a
-                href={r.url}
-                target="_blank"
-                rel="noreferrer"
-                onClick={(e) => {
-                  if (!r.url) e.preventDefault();
-                }}
-                className="inline-flex items-center rounded-xl bg-white/10 px-3 py-2 text-sm font-medium hover:bg-white/15"
-              >
-                {typeToButtonLabel(r.type)}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </div>
-
-            {r.desc ? <p className="px-4 pb-4 text-sm text-slate-300">{r.desc}</p> : null}
-          </article>
-        ))}
-      </div>
-
-      <div className="mt-10 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <h4 className="font-medium mb-2">Admin notes</h4>
-        <ul className="list-disc pl-6 text-sm text-slate-300 space-y-1">
-          <li>
-            Replace/add rows in your Google Sheet via: <span className="text-slate-200">Data
-            Source → Google Sheets → <b>KitResources</b> / <b>Resources</b></span>.
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <li key={item.id} className="rounded-2xl border p-4">
+            <div className="font-semibold mb-1">{item.title}</div>
+            {item.desc ? (
+              <div className="text-sm opacity-80 mb-3">{item.desc}</div>
+            ) : null}
+            <a
+              href={item.href}                 // ← USE THE SHEET URL
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block rounded-xl border px-3 py-2 text-sm"
+            >
+              See kit
+            </a>
           </li>
-          <li>Zap links must be public templates (start with zapier.com/shared/…).</li>
-        </ul>
-      </div>
-    </main>
-  );
-}
+        ))}
+      </ul>
 
-function Footer() {
-  return (
-    <footer className="mt-16 border-t border-white/10">
-      <div className="mx-auto max-w-6xl px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-slate-400">
-        <div>© {new Date().getFullYear()} BottleKit AI — Make work flow.</div>
-        <div className="flex items-center gap-4">
-          <a href="#" className="hover:text-slate-200">Privacy</a>
-          <a href="#" className="hover:text-slate-200">Terms</a>
-          <a href="mailto:support@yourdomain.com" className="hover:text-slate-200">Support</a>
-        </div>
-      </div>
-    </footer>
-  );
+{/* optional footer (keep ONLY if you want it) */}
+<footer className="mt-6 text-sm text-slate-400 space-x-4">
+  <a href="/privacy" className="hover:text-slate-200">Privacy</a>
+  <a href="/terms" className="hover:text-slate-200">Terms</a>
+  <a href="mailto:support@yourdomain.com" className="hover:text-slate-200">Support</a>
+</footer>
+
+</main>
+);
 }
