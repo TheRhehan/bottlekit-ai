@@ -1,148 +1,157 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-/** ====== Top-level links (edit these) ====== */
-const signInUrl = '/login';            // change to your real sign-in route later
-const createAccountUrl = '/signup';    // change to your real sign-up route later
-const buyNowUrl = 'https://buy.stripe.com/14AbJ22rX7zJ5Dv3Qebwk01'; // your Stripe link
+const STRIPE_URL = 'https://buy.stripe.com/14AbJ22rX7zJ5Dv3Qebwk01';
+
+function isExternal(href = '') {
+  return /^https?:\/\//i.test(href);
+}
 
 export default function Page() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState('');
+  const [error, setError] = useState('');
 
-  // Load kits from the API we added (/api/kits)
   useEffect(() => {
     fetch('/api/kits')
       .then(async (r) => {
         if (!r.ok) throw new Error(await r.text());
         return r.json();
       })
-      .then((data) => {
-        const rows = Array.isArray(data) ? data : (data.items || []);
-        setItems(rows);
-      })
-      .catch((e) => setError(e?.message || 'Failed to load kits'))
+      .then((data) => setItems(Array.isArray(data?.items) ? data.items : []))
+      .catch((err) => setError(err?.message || 'Failed to load kits'))
       .finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      {/* ===== NAVBAR ===== */}
-      <nav className="sticky top-0 z-20 bg-slate-950/80 backdrop-blur border-b border-white/10">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <a href="/" className="font-semibold tracking-tight">BottleKit AI</a>
-            <a href="/" className="text-sm text-slate-300 hover:text-white">Home</a>
-            <a href="/dashboard" className="text-sm text-slate-300 hover:text-white">Dashboard</a>
-          </div>
+      {/* ---------- Header ---------- */}
+      <header className="sticky top-0 z-40 backdrop-blur bg-slate-950/70 border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          {/* Brand (internal link => Next Link) */}
+          <Link href="/" className="font-semibold tracking-tight text-lg">
+            BottleKit AI
+          </Link>
+
+          {/* Nav (all internal links use <Link/>) */}
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <Link href="/" className="hover:text-slate-300 transition-colors">
+              Home
+            </Link>
+            <Link
+              href="/dashboard"
+              className="hover:text-slate-300 transition-colors"
+            >
+              Dashboard
+            </Link>
+          </nav>
+
+          {/* CTAs (external Stripe link = <a>, internal auth links = <Link/>) */}
           <div className="flex items-center gap-3">
-            <a
-              href={signInUrl}
-              className="text-sm rounded-xl px-3 py-1.5 border border-white/10 hover:bg-white/5"
+            <Link
+              href="/login"
+              className="px-3 py-1.5 rounded-lg text-sm border border-white/15 hover:bg-white/5 transition"
             >
               Sign in
-            </a>
-            <a
-              href={createAccountUrl}
-              className="text-sm rounded-xl px-3 py-1.5 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/10"
+            </Link>
+            <Link
+              href="/signup"
+              className="px-3 py-1.5 rounded-lg text-sm border border-white/15 hover:bg-white/5 transition"
             >
               Create account
-            </a>
+            </Link>
             <a
-              href={buyNowUrl}
+              href={STRIPE_URL}
               target="_blank"
-              rel="noreferrer"
-              className="text-sm rounded-xl px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-lg text-sm bg-emerald-500 hover:bg-emerald-400 text-black font-medium transition"
             >
-              Buy now →
+              Buy now
             </a>
           </div>
-        </div>
-      </nav>
-
-      {/* ===== HERO ===== */}
-      <header className="mx-auto max-w-6xl px-4 pt-10 pb-6">
-        <h1 className="text-4xl sm:text-5xl font-semibold leading-tight">
-          AI automations that <span className="text-emerald-400">draft</span>,{' '}
-          <span className="text-emerald-400">triage</span>, and{' '}
-          <span className="text-emerald-400">assign</span> in minutes.
-        </h1>
-        <p className="mt-4 max-w-2xl text-slate-300">
-          Plug-and-play kits powered by Zapier + GPT that connect your existing stack.
-          No rebuild. No BS.
-        </p>
-        <div className="mt-6 flex gap-3">
-          <a
-            href={buyNowUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-xl px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white"
-          >
-            Buy now →
-          </a>
-          <a
-            href="/dashboard"
-            className="rounded-xl px-4 py-2 border border-white/10 hover:bg-white/5"
-          >
-            Go to dashboard
-          </a>
         </div>
       </header>
 
-      {/* ===== CONTENT ===== */}
-      <main className="mx-auto max-w-6xl px-4 pb-16">
-        {/* Loading / Error states */}
+      {/* ---------- Hero ---------- */}
+      <section className="border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20">
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+            AI automations that{' '}
+            <span className="text-emerald-400">draft</span>,{' '}
+            <span className="text-emerald-400">triage</span>, and{' '}
+            <span className="text-emerald-400">assign</span> in minutes.
+          </h1>
+          <p className="mt-4 text-slate-300 max-w-2xl">
+            Plug-and-play kit of Zapier + GPT workflows that connect your stack
+            (HubSpot + Gmail, Zendesk + Slack, Zoom + Asana). No rebuild. No BS.
+          </p>
+
+          <div className="mt-6 flex gap-3">
+            <a
+              href={STRIPE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold transition"
+            >
+              Buy now
+            </a>
+            <Link
+              href="/dashboard"
+              className="px-4 py-2 rounded-xl border border-white/15 hover:bg-white/5 transition"
+            >
+              See dashboard
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Kits Grid ---------- */}
+      <main className="max-w-6xl mx-auto px-4 py-12">
         {loading && (
-          <div className="text-slate-300">Loading kits…</div>
-        )}
-        {!!error && (
-          <div className="text-red-400">API error: {error}</div>
+          <div className="text-slate-400 text-sm">Loading kits…</div>
         )}
 
-        {/* Kits grid */}
+        {error && (
+          <div className="text-red-400 text-sm">API error: {error}</div>
+        )}
+
         {!loading && !error && (
-          <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((it, i) => {
-              // Accept either { title, desc, href } or { title, desc, link }
-              const href = it.href || it.link || '#';
-              const title = it.title || `Kit ${i + 1}`;
-              const desc = it.desc || '';
-              return (
-                <article
-                  key={title + i}
-                  className="rounded-2xl border border-white/10 hover:border-white/20 transition overflow-hidden"
-                >
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-1">
-                      <h3 className="font-semibold leading-snug">{title}</h3>
-                    </div>
-                    {desc ? (
-                      <p className="text-sm text-slate-300">{desc}</p>
-                    ) : (
-                      <div className="h-5" />
-                    )}
-                    <div className="mt-4">
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-block rounded-xl border border-white/10 px-3 py-1.5 text-sm hover:bg-white/5"
-                      >
-                        See kit
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </section>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((it) => (
+              <article
+                key={it.id ?? it.title}
+                className="rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition p-4"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">{it.title}</h3>
+                  <span className="text-xs text-slate-400">{it.type}</span>
+                </div>
+
+                <p className="mt-2 text-sm text-slate-300 min-h-[2.5rem]">
+                  {it.desc}
+                </p>
+
+                <div className="mt-4">
+                  {/* Kit link — external target */}
+                  <a
+                    href={it.href}
+                    target={isExternal(it.href) ? '_blank' : undefined}
+                    rel={isExternal(it.href) ? 'noopener noreferrer' : undefined}
+                    className="inline-flex items-center rounded-xl border border-white/15 px-3 py-1.5 text-sm hover:bg-white/5 transition"
+                  >
+                    See kit
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
         )}
 
-        {/* Admin note */}
         <p className="mt-10 text-xs text-slate-400">
-          Data comes from Google Sheets via <code>NEXT_PUBLIC_SHEET_JSON_URL</code>.
+          Data comes from Google Sheets via{' '}
+          <code className="text-slate-300">NEXT_PUBLIC_SHEET_JSON_URL</code>.
         </p>
       </main>
     </div>
