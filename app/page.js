@@ -62,21 +62,15 @@ function useResources() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    fetchSheetResources()
-      .then((r) => {
-        if (!cancelled) setRows(r);
-      })
-      .catch((err) => console.error('Sheet load failed:', err));
-
-    return () => {
-      cancelled = true;
-    };
+    fetch('/api/kits')
+      .then(r => r.json())
+      .then(data => setRows(Array.isArray(data) ? data : (data.items || [])))
+      .catch(console.error);
   }, []);
 
   return rows;
 }
+
 
 /* -------------------------
    Small helper UI bits
