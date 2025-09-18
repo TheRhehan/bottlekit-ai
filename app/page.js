@@ -151,7 +151,7 @@ export default function BottlekitAIClientPortal() {
         />
       )}
       {route === 'dashboard' && <Dashboard isPaid={isPaid} grantPaid={() => setIsPaid(true)} />}
-      <footer />
+
     </div>
   );
 }
