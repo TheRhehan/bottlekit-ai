@@ -1,41 +1,31 @@
-'use client';
+// app/thank-you/page.js  (Server Component — no "use client")
 
-import { useEffect } from 'react';
-import Link from 'next/link';
+import Link from "next/link";
 
 export const metadata = {
-  title: 'Thank you | BottleKit AI',
-  description: 'Purchase successful — access unlocked.',
+  title: "Thank you | BottleKit AI",
+  description: "Purchase successful — access unlocked.",
 };
 
 export default function ThankYouPage() {
-  useEffect(() => {
-    // Mark user as paid in localStorage (simple client-side gating)
-    try {
-      localStorage.setItem('bk_paid', 'true');
-    } catch {}
-  }, []);
-
   return (
-    <main className="mx-auto max-w-2xl px-6 py-12">
-      <h1 className="text-3xl font-semibold mb-2">Thanks for your purchase! 🎉</h1>
+    <main className="mx-auto max-w-3xl px-6 py-12 text-slate-200">
+      <h1 className="text-3xl font-bold mb-3">Thank you! 🎉</h1>
       <p className="text-slate-300">
-        Your access is unlocked on this device. Click below to view your kit.
+        Your purchase was successful. You now have access to the kit and setup links.
       </p>
 
-      <div className="mt-6 flex gap-3">
-        <Link href="/" className="rounded-xl border px-4 py-2 text-sm hover:bg-white/5">
-          Go to Home
+      <div className="mt-8 flex gap-3">
+        <Link
+          href="/dashboard"
+          className="rounded-lg bg-sky-500/90 px-4 py-2 text-sm font-medium text-white hover:bg-sky-500"
+        >
+          Go to dashboard
         </Link>
-        <Link href="/dashboard" className="rounded-xl border px-4 py-2 text-sm hover:bg-white/5">
-          Open Dashboard
+        <Link href="/" className="text-sky-400 hover:underline">
+          Back home
         </Link>
       </div>
-
-      <p className="text-xs text-slate-400 mt-8">
-        Tip: If you plan to access from multiple devices, consider moving to a server-side license
-        check later (webhook + user account). This page uses a simple local unlock for speed.
-      </p>
     </main>
   );
 }

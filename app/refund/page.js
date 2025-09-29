@@ -1,43 +1,33 @@
-'use client';
+// app/refund/page.js  (Server Component — no "use client")
+
+import Link from "next/link";
 
 export const metadata = {
-  title: 'Refund Policy | BottleKit AI',
-  description: 'How refunds work for BottleKit AI purchases.',
+  title: "Refund Policy | BottleKit AI",
+  description: "How refunds work for BottleKit AI purchases.",
 };
 
 export default function RefundPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-semibold mb-6">Refund Policy</h1>
-      <p className="text-slate-300 mb-4">
-        Last updated: {new Date().toLocaleDateString()}
-      </p>
+    <main className="mx-auto max-w-3xl px-6 py-12 text-slate-200">
+      <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
+      <p className="mb-4 text-slate-400 text-sm">Last updated: Sept 2025</p>
 
-      <section className="space-y-4 text-slate-300">
+      <section className="space-y-4 leading-7">
         <p>
-          We want you to be successful. If you encounter issues, contact us at{' '}
-          <a className="underline" href="mailto:support@yourdomain.com">support@yourdomain.com</a>.
+          If something isn’t right, contact us within 14 days of purchase and
+          we’ll work with you. Approved refunds are processed to your original
+          payment method. Some exclusions may apply for misuse or abuse.
         </p>
-
-        <h2 className="text-xl font-semibold mt-6">Eligibility</h2>
         <p>
-          Refund requests must be made within 7 days of purchase and require a brief description of the
-          issue. We may request proof to help us understand and resolve the problem.
-        </p>
-
-        <h2 className="text-xl font-semibold mt-6">Non-Refundable Situations</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Buyer’s remorse without a product issue.</li>
-          <li>Violation of Terms of Service or license sharing.</li>
-          <li>Requests made after the refund window.</li>
-        </ul>
-
-        <h2 className="text-xl font-semibold mt-6">Process</h2>
-        <p>
-          Email us with your order email, date, and reason. If approved, refunds are issued to the
-          original payment method by our payment processor.
+          Email <a className="underline" href="mailto:support@yourdomain.com">support@yourdomain.com</a> with your order
+          email and receipt for assistance.
         </p>
       </section>
+
+      <div className="mt-10">
+        <Link href="/" className="text-sky-400 hover:underline">← Back home</Link>
+      </div>
     </main>
   );
 }
