@@ -6,12 +6,6 @@ export const metadata = {
 };
 
 export default function PortalLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        {/* Client guard handles acceptance */}
-        <PortalGuard>{children}</PortalGuard>
-      </body>
-    </html>
-  );
+  // Client guard enforces Terms acceptance
+  return <PortalGuard>{children}</PortalGuard>;
 }

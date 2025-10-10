@@ -1,12 +1,14 @@
 // app/components/SignupBlock.jsx
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export const TERMS_VERSION = "bk_terms_v1"; // bump when you change terms text
-export const TERMS_DATE = "2025-10-09";
+export const TERMS_VERSION = "bk_terms_v1";   // bump when terms change
+export const TERMS_DATE = "2025-10-09";       // update when you revise terms
 
 export default function SignupBlock() {
   const [agree, setAgree] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const accepted = localStorage.getItem(TERMS_VERSION) === TERMS_DATE;
@@ -14,14 +16,14 @@ export default function SignupBlock() {
   }, []);
 
   const handleSubmit = (e) => {
+    e.preventDefault(); // stop default form reload
     if (!agree) {
-      e.preventDefault();
       alert("You must agree to the Terms to continue.");
       return;
     }
     localStorage.setItem(TERMS_VERSION, TERMS_DATE);
     localStorage.setItem("bk_terms_accepted_at", new Date().toISOString());
-    // proceed with your normal signup — if you have a form action, it will submit.
+    router.push("/portal"); // go to portal
   };
 
   return (
@@ -32,9 +34,6 @@ export default function SignupBlock() {
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Replace with your real inputs if needed */}
-        {/* <input className="w-full rounded border px-3 py-2" placeholder="Email" /> */}
-
         <label className="flex items-start gap-3 text-sm">
           <input
             type="checkbox"
@@ -46,7 +45,7 @@ export default function SignupBlock() {
           <span>
             I agree to the{" "}
             <a className="underline" href="/terms" target="_blank" rel="noreferrer">
-              Terms of Use & License Agreement
+              Terms of Use &amp; License Agreement
             </a>
             .
           </span>
