@@ -1,31 +1,41 @@
-// app/thank-you/page.js  (Server Component — no "use client")
-
-import Link from "next/link";
-
-export const metadata = {
-  title: "Thank you | BottleKit AI",
-  description: "Purchase successful — access unlocked.",
-};
+'use client'
+import { useEffect } from "react"
 
 export default function ThankYouPage() {
-  return (
-    <main className="mx-auto max-w-3xl px-6 py-12 text-slate-200">
-      <h1 className="text-3xl font-bold mb-3">Thank you! 🎉</h1>
-      <p className="text-slate-300">
-        Your purchase was successful. You now have access to the kit and setup links.
-      </p>
+  useEffect(() => {
+    // Fire Google Ads conversion event once page loads
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "conversion", {
+        send_to: "AW-17649929324/vKbPCO7owq0DEOyYrkUB",
+      })
+      console.log("Google Ads conversion event fired: Signup – BottleKit")
+    } else {
+      console.warn("gtag not found – ensure the global site tag is loaded on all pages.")
+    }
+  }, [])
 
-      <div className="mt-8 flex gap-3">
-        <Link
-          href="/dashboard"
-          className="rounded-lg bg-sky-500/90 px-4 py-2 text-sm font-medium text-white hover:bg-sky-500"
-        >
-          Go to dashboard
-        </Link>
-        <Link href="/" className="text-sky-400 hover:underline">
-          Back home
-        </Link>
-      </div>
+  return (
+    <main
+      className="thank-you-page"
+      style={{ textAlign: "center", padding: "60px 20px" }}
+    >
+      <h1>Thank you!</h1>
+      <p>Your submission has been received successfully.</p>
+      <p>We’ll get in touch soon or you can return to the homepage.</p>
+      <a
+        href="/"
+        style={{
+          display: "inline-block",
+          marginTop: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#007bff",
+          color: "#fff",
+          borderRadius: "6px",
+          textDecoration: "none",
+        }}
+      >
+        Go back home
+      </a>
     </main>
-  );
+  )
 }
