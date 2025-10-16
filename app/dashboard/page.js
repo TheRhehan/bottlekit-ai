@@ -39,7 +39,7 @@ function RightRail({ paid }) {
               href={STRIPE_URL}
               className="mt-4 block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white"
             >
-              Get Access — $1,200
+              Get Access
             </a>
           </>
         )}
