@@ -22,43 +22,26 @@ function Sidebar() {
   );
 }
 
-function RightRail({ paid, setPaid }) {
+function RightRail({ paid }) {
   return (
     <aside className="w-80 shrink-0">
       <div className="sticky top-6 rounded-2xl bg-slate-900 p-5 border border-slate-800">
         <h3 className="font-semibold mb-2">Your Access</h3>
         {paid ? (
-          <p className="text-green-400 mb-4">Access: Active</p>
+          <p className="text-green-400">Access: Active</p>
         ) : (
-          <p className="text-amber-400 mb-4">Access: Locked</p>
-        )}
-
-        {!paid && (
-          <a
-            href={STRIPE_URL}
-            className="block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white"
-          >
-            Get Access — $1,200
-          </a>
-        )}
-
-        <div className="mt-4 text-xs text-slate-400">
-          After purchase you’ll be redirected to <code>/success</code>. We unlock your access on that page.
-        </div>
-
-        {/* Dev helper: toggle paid locally while testing */}
-        {!paid && (
-          <button
-            className="mt-4 text-xs underline text-slate-400 hover:text-slate-200"
-            onClick={() => {
-              try {
-                localStorage.setItem(PAID_KEY, 'true');
-                setPaid(true);
-              } catch {}
-            }}
-          >
-            (Dev) Mark as paid
-          </button>
+          <>
+            <p className="text-amber-400">Access: Locked</p>
+            <p className="text-xs text-slate-400 mt-2">
+              Purchase is required to unlock the kits. After checkout you’ll be redirected to <code>/success</code>.
+            </p>
+            <a
+              href={STRIPE_URL}
+              className="mt-4 block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white"
+            >
+              Get Access — $1,200
+            </a>
+          </>
         )}
       </div>
     </aside>
@@ -96,6 +79,7 @@ export default function Dashboard() {
   const [kits, setKits] = useState([]);
   const [paid, setPaid] = useState(false);
 
+  // Load kits (your existing API)
   useEffect(() => {
     fetch('/api/kits')
       .then((r) => (r.ok ? r.json() : { items: [] }))
@@ -103,12 +87,21 @@ export default function Dashboard() {
       .catch(() => setKits([]));
   }, []);
 
+  // Only mark as paid if /success has set the PAID_KEY flag
   useEffect(() => {
     try {
-      setPaid(localStorage.getItem(PAID_KEY) === 'true');
+      const isPaid = localStorage.getItem(PAID_KEY) === 'true';
+      setPaid(isPaid);
     } catch {
       setPaid(false);
     }
+
+    // keep in sync if user completes checkout in another tab
+    const onStorage = (e) => {
+      if (e.key === PAID_KEY) setPaid(e.newValue === 'true');
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
   }, []);
 
   return (
@@ -147,7 +140,7 @@ export default function Dashboard() {
           </section>
 
           {/* Right */}
-          <RightRail paid={paid} setPaid={setPaid} />
+          <RightRail paid={paid} />
         </div>
       </div>
     </main>
