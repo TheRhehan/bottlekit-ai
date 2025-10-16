@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-const STRIPE_URL = 'https://buy.stripe.com/14AbJ22rX7zJ5Dv3Qebwk01';
+const STRIPE_URL = 'https://buy.stripe.com/5kQ7sM8QlcU31nf0E2bwk02';
 
 function isExternal(href = '') {
   return /^https?:\/\//i.test(href);
