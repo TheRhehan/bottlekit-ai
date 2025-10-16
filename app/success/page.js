@@ -1,29 +1,26 @@
-// app/success/page.js
-import Link from "next/link";
+'use client';
+
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { PAID_KEY } from '@/lib/consts';
 
 export default function Success() {
+  useEffect(() => {
+    try {
+      localStorage.setItem(PAID_KEY, 'true');
+    } catch (_) {}
+  }, []);
+
   return (
-    <main className="mx-auto max-w-2xl p-8">
-      <h1 className="text-2xl font-semibold">
-        Payment received <span role="img" aria-label="check">✅</span>
-      </h1>
-      <p className="mt-2 text-slate-500">
-        Thanks we&rsquo;ll activate your BottleKit AI access shortly.
-      </p>
-
-      <div className="mt-6 flex gap-3">
+    <main className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-lg text-center">
+        <h1 className="text-3xl font-semibold mb-2">Payment successful ✅</h1>
+        <p className="text-slate-400 mb-6">Your access has been unlocked on this device.</p>
         <Link
-          href="/"
-          className="inline-flex items-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-500"
+          href="/dashboard"
+          className="inline-block rounded-md bg-slate-200 text-slate-900 px-6 py-3 font-semibold hover:bg-white"
         >
-          Back to home
-        </Link>
-
-        <Link
-          href="/"
-          className="inline-flex items-center rounded-xl border border-white/10 px-4 py-2.5 text-sm font-semibold hover:bg-white/10"
-        >
-          View dashboard
+          Go to Dashboard
         </Link>
       </div>
     </main>
