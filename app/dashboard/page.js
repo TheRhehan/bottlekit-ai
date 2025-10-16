@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { STRIPE_URL, PAID_KEY } from '@/lib/consts';
+import { STRIPE_URL, PAID_KEY } from '../../lib/consts';
 
 function Sidebar() {
   return (
@@ -46,13 +46,15 @@ function RightRail({ paid, setPaid }) {
           After purchase you’ll be redirected to <code>/success</code>. We unlock your access on that page.
         </div>
 
-        {/* Dev helper: let you manually unlock while testing */}
+        {/* Dev helper: toggle paid locally while testing */}
         {!paid && (
           <button
             className="mt-4 text-xs underline text-slate-400 hover:text-slate-200"
             onClick={() => {
-              localStorage.setItem(PAID_KEY, 'true');
-              setPaid(true);
+              try {
+                localStorage.setItem(PAID_KEY, 'true');
+                setPaid(true);
+              } catch {}
             }}
           >
             (Dev) Mark as paid
@@ -86,10 +88,6 @@ function KitCard({ title, subtitle, locked, href }) {
           {locked ? 'Preview only' : 'Open kit'}
         </button>
       </div>
-
-      {locked && (
-        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-slate-800 pointer-events-none" />
-      )}
     </div>
   );
 }
@@ -99,16 +97,18 @@ export default function Dashboard() {
   const [paid, setPaid] = useState(false);
 
   useEffect(() => {
-    // load kits the way your app already does
     fetch('/api/kits')
-      .then((r) => (r.ok ? r.json() : []))
+      .then((r) => (r.ok ? r.json() : { items: [] }))
       .then((data) => setKits(Array.isArray(data?.items) ? data.items : []))
       .catch(() => setKits([]));
   }, []);
 
   useEffect(() => {
-    const flag = typeof window !== 'undefined' && localStorage.getItem(PAID_KEY) === 'true';
-    setPaid(flag);
+    try {
+      setPaid(localStorage.getItem(PAID_KEY) === 'true');
+    } catch {
+      setPaid(false);
+    }
   }, []);
 
   return (

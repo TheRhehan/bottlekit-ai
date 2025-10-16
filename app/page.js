@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { STRIPE_URL } from '@/lib/consts';
+import { STRIPE_URL } from '../lib/consts';
 
 export default function Home() {
   const [agreed, setAgreed] = useState(false);
@@ -13,7 +13,6 @@ export default function Home() {
         <h1 className="text-3xl font-semibold mb-2">BottleKit AI</h1>
         <p className="text-slate-400 mb-8">Plug-and-play AI automations for small teams.</p>
 
-        {/* Terms */}
         <label className="flex items-start gap-3 mb-4">
           <input
             type="checkbox"
@@ -29,7 +28,6 @@ export default function Home() {
           </span>
         </label>
 
-        {/* Primary CTA → Dashboard */}
         <button
           disabled={!agreed}
           onClick={() => (window.location.href = '/dashboard')}
@@ -39,7 +37,7 @@ export default function Home() {
           Continue
         </button>
 
-        {/* Secondary: Buy link (optional from home) */}
+        {/* optional buy link on home */}
         <div className="mt-4 text-center">
           <a
             href={STRIPE_URL}

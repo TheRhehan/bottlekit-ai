@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { PAID_KEY } from '@/lib/consts';
+import { PAID_KEY } from '../../lib/consts';
 
 export default function Success() {
   useEffect(() => {
     try {
       localStorage.setItem(PAID_KEY, 'true');
-    } catch (_) {}
+    } catch {}
   }, []);
 
   return (
