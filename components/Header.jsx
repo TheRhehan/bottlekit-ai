@@ -1,4 +1,3 @@
-// /components/Header.jsx
 'use client';
 
 import Link from 'next/link';
@@ -6,35 +5,39 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0B1220]/70 backdrop-blur">
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
-        {/* Left: Brand */}
-        <Link href="/" className="flex items-center gap-2">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-slate-950/60 backdrop-blur supports-[backdrop-filter]:bg-slate-950/40">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Left: Logo */}
+        <Link href="/" className="group flex items-center gap-2">
           <Image
             src="/bottlekit-logo.png"
             alt="BottleKit AI"
-            width={120}
+            width={28}
             height={28}
             priority
-            className="h-7 w-auto"
+            className="h-7 w-7 rounded"
           />
+          <span className="text-sm font-semibold text-slate-200 group-hover:text-white">
+            BottleKit AI
+          </span>
         </Link>
 
-        {/* Right: Auth actions */}
-        <nav className="flex items-center gap-3">
+        {/* Right: Auth CTAs */}
+        <div className="flex items-center gap-6">
           <Link
             href="/login"
-            className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white"
+            className="text-sm text-slate-300 hover:text-white transition"
           >
             Log in
           </Link>
+
           <Link
-            href="/dashboard"
-            className="rounded-md bg-white px-3.5 py-1.5 text-sm font-semibold text-[#0B1220] hover:bg-slate-200"
+            href="/signup"
+            className="px-3 py-1.5 rounded-md bg-white text-slate-900 text-sm font-medium hover:bg-slate-100 transition"
           >
             Get started
           </Link>
-        </nav>
+        </div>
       </div>
     </header>
   );
