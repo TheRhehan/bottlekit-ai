@@ -25,9 +25,9 @@ export default function Home() {
         </h1>
 
         <p className="mt-5 max-w-2xl text-lg leading-7 text-slate-300">
-          BottleKit gives you a dashboard of prebuilt automations: draft emails, triage tickets,
-          summarize meetings, calculate ROI, and more—without wiring up prompts or code.
-          Turn it on and get time back today.
+          Stop wasting hours on tickets, emails, and notes. BottleKit automates
+          the grunt work — replies, triage, summaries, ROI — so you reclaim time
+          without adding headcount. Install once, win time every day.
         </p>
 
         {/* Bullets */}
