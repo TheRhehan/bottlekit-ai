@@ -23,7 +23,9 @@ export default function Hero() {
 
         {/* lead */}
         <p className="mt-6 max-w-2xl text-lg leading-7 text-white/70">
-          Stop wasting hours on tickets, emails, and notes. BottleKit automates the grunt work — replies, triage, summaries, ROI — so you reclaim time without adding headcount. Install once, win time every day.
+          Stop wasting hours on tickets, emails, and notes. BottleKit automates the grunt
+          work — replies, triage, summaries, ROI — so you reclaim time without adding
+          headcount. Install once, win time every day.
         </p>
 
         {/* bullets */}
