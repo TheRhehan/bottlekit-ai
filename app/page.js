@@ -1,53 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { STRIPE_URL } from '../lib/consts';
+import { useState } from 'react';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import TermsModal from '@/components/TermsModal';
 
-export default function Home() {
-  const [agreed, setAgreed] = useState(false);
+export default function Page() {
+  const [openTerms, setOpenTerms] = useState(false);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-3xl">
-        <h1 className="text-3xl font-semibold mb-2">BottleKit AI</h1>
-        <p className="text-slate-400 mb-8">Plug-and-play AI automations for small teams.</p>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+      {/* Top nav */}
+      <Header onGetStarted={() => setOpenTerms(true)} />
 
-        <label className="flex items-start gap-3 mb-4">
-          <input
-            type="checkbox"
-            className="mt-1 h-4 w-4"
-            checked={agreed}
-            onChange={(e) => setAgreed(e.target.checked)}
-          />
-          <span>
-            I agree to the{' '}
-            <Link href="/terms" className="underline">
-              Terms of Use &amp; License Agreement
-            </Link>.
-          </span>
-        </label>
+      {/* Hero */}
+      <Hero onGetStarted={() => setOpenTerms(true)} />
 
-        <button
-          disabled={!agreed}
-          onClick={() => (window.location.href = '/dashboard')}
-          className={`w-full rounded-md px-6 py-4 font-semibold transition
-            ${agreed ? 'bg-slate-300 text-slate-900 hover:bg-slate-200' : 'bg-slate-700 text-slate-400 cursor-not-allowed'}`}
-        >
-          Continue
-        </button>
-
-        {/* optional buy link on home */}
-        <div className="mt-4 text-center">
-          <a
-            href={STRIPE_URL}
-            className="inline-block text-sm underline text-slate-300 hover:text-white"
-            rel="noopener noreferrer"
-          >
-            Get Access — $1,200
-          </a>
+      {/* Footer (simple) */}
+      <footer className="border-t border-white/10 mt-20">
+        <div className="mx-auto max-w-7xl px-6 py-8 text-sm text-slate-400">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© {new Date().getFullYear()} BottleKit AI. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </main>
+      </footer>
+
+      {/* Terms gate (only when user clicks Get started) */}
+      <TermsModal open={openTerms} onClose={() => setOpenTerms(false)} />
+    </div>
   );
 }
