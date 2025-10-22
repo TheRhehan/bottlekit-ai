@@ -1,31 +1,39 @@
+// /components/Header.jsx
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
-export default function Header({ onGetStarted }) {
+export default function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-slate-950/70 backdrop-blur supports-[backdrop-filter]:bg-slate-950/50 border-b border-white/10">
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        {/* Left — Logo only (keep) */}
+    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0B1220]/70 backdrop-blur">
+      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
+        {/* Left: Brand */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-white"></div>
-          <span className="text-white font-semibold">BottleKit&nbsp;AI</span>
+          <Image
+            src="/bottlekit-logo.png"
+            alt="BottleKit AI"
+            width={120}
+            height={28}
+            priority
+            className="h-7 w-auto"
+          />
         </Link>
 
-        {/* Right — Log in + Get started (keep) */}
+        {/* Right: Auth actions */}
         <nav className="flex items-center gap-3">
           <Link
             href="/login"
-            className="text-slate-300 hover:text-white transition-colors px-3 py-2 text-sm"
+            className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white"
           >
             Log in
           </Link>
-          <button
-            onClick={onGetStarted}
-            className="rounded-lg bg-white text-slate-900 hover:bg-slate-200 transition-colors px-4 py-2 text-sm font-medium"
+          <Link
+            href="/dashboard"
+            className="rounded-md bg-white px-3.5 py-1.5 text-sm font-semibold text-[#0B1220] hover:bg-slate-200"
           >
             Get started
-          </button>
+          </Link>
         </nav>
       </div>
     </header>
