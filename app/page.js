@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import SocialProof from "@/components/SocialProof";
 
 export default function Home() {
   return (
@@ -73,6 +74,8 @@ export default function Home() {
             Get started
           </Link>
         </div>
+
+        <SocialProof />
 
         {/* Feature tiles */}
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
