@@ -1,22 +1,17 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { STRIPE_URL, PAID_KEY } from '../../lib/consts';
+import PricingDashboard from "@/components/PricingDashboard";
 
 function Sidebar() {
   return (
     <aside className="w-64 shrink-0">
       <div className="sticky top-6 space-y-3">
-        <Link href="/signup" className="block w-full rounded-lg bg-slate-800 hover:bg-slate-700 px-4 py-3 text-left">
-          Sign up
-        </Link>
-        <Link href="/login" className="block w-full rounded-lg bg-slate-800 hover:bg-slate-700 px-4 py-3 text-left">
-          Sign in
-        </Link>
-        <Link href="/" className="block w-full rounded-lg bg-slate-900 hover:bg-slate-800 px-4 py-3 text-left">
-          ← Back to home
-        </Link>
+        <Link href="/signup" className="block w-full rounded-lg bg-slate-800 hover:bg-slate-700 px-4 py-3 text-left">Sign up</Link>
+        <Link href="/login" className="block w-full rounded-lg bg-slate-800 hover:bg-slate-700 px-4 py-3 text-left">Sign in</Link>
+        <Link href="/" className="block w-full rounded-lg bg-slate-900 hover:bg-slate-800 px-4 py-3 text-left">← Back to home</Link>
       </div>
     </aside>
   );
@@ -35,10 +30,7 @@ function RightRail({ paid }) {
             <p className="text-xs text-slate-400 mt-2">
               Purchase is required to unlock the kits. After checkout you’ll be redirected to <code>/success</code>.
             </p>
-            <a
-              href={STRIPE_URL}
-              className="mt-4 block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white"
-            >
+            <a href={STRIPE_URL} className="mt-4 block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white">
               Get Access
             </a>
           </>
@@ -56,17 +48,15 @@ function KitCard({ title, subtitle, locked, href }) {
           <h4 className="font-semibold">{title}</h4>
           <p className="text-sm text-slate-400">{subtitle}</p>
         </div>
-        {locked && (
-          <span className="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700">Locked</span>
-        )}
+        {locked && <span className="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700">Locked</span>}
       </div>
-
       <div className="mt-4">
         <button
           disabled={locked}
-          onClick={() => !locked && window.open(href, '_blank')}
-          className={`rounded-lg px-4 py-2 font-medium transition
-            ${locked ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-slate-200 text-slate-900 hover:bg-white'}`}
+          onClick={() => !locked && window.open(href, "_blank")}
+          className={`rounded-lg px-4 py-2 font-medium transition ${
+            locked ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-slate-200 text-slate-900 hover:bg-white'
+          }`}
         >
           {locked ? 'Preview only' : 'Open kit'}
         </button>
@@ -79,15 +69,13 @@ export default function Dashboard() {
   const [kits, setKits] = useState([]);
   const [paid, setPaid] = useState(false);
 
-  // Load kits (your existing API)
   useEffect(() => {
     fetch('/api/kits')
-      .then((r) => (r.ok ? r.json() : { items: [] }))
-      .then((data) => setKits(Array.isArray(data?.items) ? data.items : []))
+      .then(r => r.json())
+      .then(data => setKits(Array.isArray(data?.items) ? data.items : []))
       .catch(() => setKits([]));
   }, []);
 
-  // Only mark as paid if /success has set the PAID_KEY flag
   useEffect(() => {
     try {
       const isPaid = localStorage.getItem(PAID_KEY) === 'true';
@@ -95,18 +83,11 @@ export default function Dashboard() {
     } catch {
       setPaid(false);
     }
-
-    // keep in sync if user completes checkout in another tab
-    const onStorage = (e) => {
-      if (e.key === PAID_KEY) setPaid(e.newValue === 'true');
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
   }, []);
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6">
-      <div className="mx-auto max-w-7xl">
+      <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-semibold mb-6">Dashboard</h1>
 
         <div className="flex gap-6">
@@ -120,24 +101,27 @@ export default function Dashboard() {
                 <>
                   <KitCard title="Email-Drafter Zap" subtitle="Draft reply from HubSpot note" locked={!paid} href="#" />
                   <KitCard title="Ticket-Triage Zap" subtitle="Auto-prioritize tickets" locked={!paid} href="#" />
-                  <KitCard title="Minutes Bot Zap" subtitle="Summarize meetings → tasks" locked={!paid} href="#" />
+                  <KitCard title="Minutes Bot Zap" subtitle="Summarize meetings & tasks" locked={!paid} href="#" />
                   <KitCard title="Quick-Start: Email-Drafter" subtitle="2-page setup checklist" locked={!paid} href="#" />
                   <KitCard title="ROI Calculator Sheet" subtitle="Savings model" locked={!paid} href="#" />
                   <KitCard title="Loom Tutorial: Minutes Bot" subtitle="Short walkthrough" locked={!paid} href="#" />
                 </>
               )}
 
-              {kits.map((k) => (
+              {kits.map(k => (
                 <KitCard
                   key={k.id || k.title}
                   title={k.title}
                   subtitle={k.subtitle || k.description || ''}
                   locked={!paid}
-                  href={k.url || '#'}
+                  href={k.url || "#"}
                 />
               ))}
             </div>
           </section>
+
+          {/* ✅ NEW — pricing for unpaid users */}
+          {!paid && <PricingDashboard />}
 
           {/* Right */}
           <RightRail paid={paid} />
