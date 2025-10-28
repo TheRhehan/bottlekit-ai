@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import SocialProof from '@/components/SocialProof';
 import UrgencyBar from '@/components/UrgencyBar';
+import WhoFor from '@/components/WhoFor';
 
 export default function Home() {
   return (
@@ -14,8 +15,8 @@ export default function Home() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_35%_at_20%_10%,rgba(120,119,198,0.25),transparent_60%)]"
       />
 
-      {/* Eyebrow pill */}
       <div className="relative mx-auto w-full max-w-6xl px-4 py-20">
+        {/* Eyebrow pill */}
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-white/80">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
           AI Operations • Ready-to-run Kits
@@ -30,8 +31,8 @@ export default function Home() {
 
         {/* Lead */}
         <p className="mt-5 max-w-2xl text-lg leading-7 text-slate-300">
-          Stop wasting hours on tickets, emails, and notes. BottleKit automates
-          the grunt work — replies, triage, summaries, ROI — so you reclaim time
+          Stop wasting hours on tickets, emails, and notes. BottleKit automates the
+          grunt work — replies, triage, summaries, ROI — so you reclaim time
           without adding headcount. Install once, win time every day.
         </p>
 
@@ -44,7 +45,6 @@ export default function Home() {
               Reply to customers in your tone with context pulled from the thread.
             </p>
           </li>
-
           <li className="flex items-start gap-3">
             <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
             <p>
@@ -52,7 +52,6 @@ export default function Home() {
               Auto-route, prioritize, and tag support tickets—no manual sorting.
             </p>
           </li>
-
           <li className="flex items-start gap-3">
             <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
             <p>
@@ -60,7 +59,6 @@ export default function Home() {
               Turn meeting recordings into action items and summaries instantly.
             </p>
           </li>
-
           <li className="flex items-start gap-3">
             <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
             <p>
@@ -68,14 +66,13 @@ export default function Home() {
               Show the value of automation to your team in dollars saved per week.
             </p>
           </li>
-
           <li className="flex items-start gap-3">
             <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
             <p>Stripe checkout, instant access, cancel anytime.</p>
           </li>
         </ul>
 
-        {/* Primary CTA (no “free”, no secondary) */}
+        {/* Primary CTA */}
         <div className="mt-8 flex items-center gap-3">
           <Link
             href="/signup"
@@ -85,11 +82,14 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Anti-risk / urgency microcopy directly under CTA */}
+        {/* Anti-risk / urgency microcopy under CTA */}
         <UrgencyBar />
 
-        {/* Social proof / compatibility bar */}
+        {/* Social proof / compatibility */}
         <SocialProof />
+
+        {/* Who it's for (targeting band) */}
+        <WhoFor />
 
         {/* Feature tiles */}
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -136,7 +136,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer links */}
+        {/* Footer */}
         <footer className="mt-14 flex items-center justify-center gap-6 border-t border-white/10 pt-6 text-sm text-slate-400">
           <Link href="/privacy" className="hover:text-slate-200">
             Privacy
