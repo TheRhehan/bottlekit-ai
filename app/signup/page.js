@@ -1,85 +1,111 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 
-export default function SignupPage() {
+export default function SignUp() {
   const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [pwd2, setPwd2] = useState('');
+  const [pw, setPw] = useState('');
+  const [pw2, setPw2] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const [err, setErr] = useState(null);
 
-  function onSubmit(e) {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (pwd !== pwd2) {
-      alert('Passwords do not match.');
-      return;
+    setErr(null);
+    setMsg(null);
+
+    if (!email || !pw) return setErr('Email and password are required.');
+    if (pw !== pw2) return setErr('Passwords do not match.');
+    if (!supabase) return setErr('Auth client not initialized.');
+
+    setLoading(true);
+    try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: pw,
+        options: {
+          emailRedirectTo: `${origin}/success`
+        }
+      });
+
+      if (error) throw error;
+
+      // If confirmations ON, Supabase sends an email; if OFF, session is ready.
+      if (data?.session) {
+        window.location.href = '/dashboard';
+      } else {
+        setMsg('Check your email to confirm your account. Once confirmed, you’ll be redirected.');
+      }
+    } catch (e2) {
+      setErr(e2.message || 'Sign up failed.');
+    } finally {
+      setLoading(false);
     }
-    alert(`Create account pressed for ${email}`); // placeholder
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="max-w-md mx-auto px-4 py-16">
-        <h1 className="text-3xl font-bold">Create account</h1>
-        <p className="mt-2 text-slate-400 text-sm">
-          This is a placeholder sign-up page. Wire it to your auth provider later.
-        </p>
+    <main className="min-h-screen bg-slate-950 text-slate-100 p-6">
+      <div className="max-w-md mx-auto">
+        <h1 className="text-2xl font-semibold mb-6">Create your BottleKit account</h1>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm mb-1">Email</label>
+            <label className="block text-sm text-slate-300 mb-1">Email</label>
             <input
               type="email"
-              required
+              className="w-full rounded-md bg-slate-900 border border-slate-800 px-3 py-2"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 outline-none"
-              placeholder="you@company.com"
+              required
             />
           </div>
+
           <div>
-            <label className="block text-sm mb-1">Password</label>
+            <label className="block text-sm text-slate-300 mb-1">Password</label>
             <input
               type="password"
+              className="w-full rounded-md bg-slate-900 border border-slate-800 px-3 py-2"
+              value={pw}
+              onChange={(e) => setPw(e.target.value)}
               required
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-              className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 outline-none"
-              placeholder="••••••••"
             />
           </div>
+
           <div>
-            <label className="block text-sm mb-1">Confirm password</label>
+            <label className="block text-sm text-slate-300 mb-1">Confirm password</label>
             <input
               type="password"
+              className="w-full rounded-md bg-slate-900 border border-slate-800 px-3 py-2"
+              value={pw2}
+              onChange={(e) => setPw2(e.target.value)}
               required
-              value={pwd2}
-              onChange={(e) => setPwd2(e.target.value)}
-              className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 outline-none"
-              placeholder="••••••••"
             />
           </div>
+
+          {err && <p className="text-sm text-rose-400">{err}</p>}
+          {msg && <p className="text-sm text-emerald-400">{msg}</p>}
+
           <button
             type="submit"
-            className="w-full rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-semibold py-2 transition"
+            disabled={loading}
+            className="w-full rounded-md bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 px-3 py-2 font-semibold"
           >
-            Create account
+            {loading ? 'Creating…' : 'Create account'}
           </button>
         </form>
 
-        <div className="mt-6 text-sm text-slate-400">
-          Already have an account?{' '}
-          <Link href="/login" className="text-emerald-400 hover:underline">
-            Sign in
-          </Link>
-        </div>
+        <p className="text-sm text-slate-400 mt-4">
+          Already have an account? <Link href="/login" className="underline">Sign in</Link>
+        </p>
 
-        <div className="mt-8">
-          <Link href="/" className="inline-flex items-center rounded-lg border border-white/15 px-3 py-1.5 text-sm hover:bg-white/5">
-            ← Back to home
-          </Link>
-        </div>
+        <p className="text-sm text-slate-500 mt-6">
+          ← <Link href="/" className="underline">Back to home</Link>
+        </p>
       </div>
-    </div>
+    </main>
   );
 }

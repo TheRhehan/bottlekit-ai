@@ -1,69 +1,79 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 
-export default function LoginPage() {
+export default function Login() {
   const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [pw, setPw] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
 
-  function onSubmit(e) {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    alert(`Sign in pressed for ${email}`); // placeholder
-  }
+    setErr(null);
+    if (!supabase) return setErr('Auth client not initialized.');
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password: pw });
+      if (error) throw error;
+      if (data?.session) window.location.href = '/dashboard';
+      else setErr('Login failed. Please try again.');
+    } catch (e2) {
+      setErr(e2.message || 'Login failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="max-w-md mx-auto px-4 py-16">
-        <h1 className="text-3xl font-bold">Sign in</h1>
-        <p className="mt-2 text-slate-400 text-sm">
-          This is a placeholder sign-in page. Wire it to your auth provider later.
-        </p>
+    <main className="min-h-screen bg-slate-950 text-slate-100 p-6">
+      <div className="max-w-md mx-auto">
+        <h1 className="text-2xl font-semibold mb-6">Sign in</h1>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm mb-1">Email</label>
+            <label className="block text-sm text-slate-300 mb-1">Email</label>
             <input
               type="email"
-              required
+              className="w-full rounded-md bg-slate-900 border border-slate-800 px-3 py-2"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 outline-none"
-              placeholder="you@company.com"
+              required
             />
           </div>
+
           <div>
-            <label className="block text-sm mb-1">Password</label>
+            <label className="block text-sm text-slate-300 mb-1">Password</label>
             <input
               type="password"
+              className="w-full rounded-md bg-slate-900 border border-slate-800 px-3 py-2"
+              value={pw}
+              onChange={(e) => setPw(e.target.value)}
               required
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-              className="w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 outline-none"
-              placeholder="••••••••"
             />
           </div>
+
+          {err && <p className="text-sm text-rose-400">{err}</p>}
+
           <button
             type="submit"
-            className="w-full rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-semibold py-2 transition"
+            disabled={loading}
+            className="w-full rounded-md bg-emerald-600 hover:bg-emerald-500 disabled:opacity-60 px-3 py-2 font-semibold"
           >
-            Sign in
+            {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
 
-        <div className="mt-6 text-sm text-slate-400">
-          Don’t have an account?{' '}
-          <Link href="/signup" className="text-emerald-400 hover:underline">
-            Create account
-          </Link>
-        </div>
+        <p className="text-sm text-slate-400 mt-4">
+          Need an account? <Link href="/signup" className="underline">Create one</Link>
+        </p>
 
-        <div className="mt-8">
-          <Link href="/" className="inline-flex items-center rounded-lg border border-white/15 px-3 py-1.5 text-sm hover:bg-white/5">
-            ← Back to home
-          </Link>
-        </div>
+        <p className="text-sm text-slate-500 mt-6">
+          ← <Link href="/" className="underline">Back to home</Link>
+        </p>
       </div>
-    </div>
+    </main>
   );
 }
