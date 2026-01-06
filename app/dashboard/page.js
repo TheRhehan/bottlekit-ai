@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { STRIPE_URL, PAID_KEY } from '../../lib/consts';
-import supabase from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import PricingDashboard from '@/components/PricingDashboard';
 
 function Sidebar() {
