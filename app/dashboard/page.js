@@ -34,7 +34,7 @@ function RightRail({ paid }) {
         ) : (
           <>
             <p className="text-amber-400">Access: Locked</p>
-            <p className="text-xs text-slate-400 mt-2">Purchase is required to unlock the kits. After checkout you'll be redirected to <code>/success</code>.</p>
+            <p className="text-xs text-slate-400 mt-2">Purchase is required to unlock the kits. After checkout you&apos;ll be redirected to <code>/success</code>.</p>
             <a
               href={STRIPE_URL}
               className="mt-4 block w-full text-center rounded-lg bg-slate-200 text-slate-900 font-semibold px-4 py-3 hover:bg-white"
