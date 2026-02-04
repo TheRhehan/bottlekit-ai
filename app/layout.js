@@ -11,7 +11,7 @@ const GADS_ID = "AW-17649929324"; // <- your Google Ads ID from the Install the 
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Ads base tag (gtag.js) */}
         <Script
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

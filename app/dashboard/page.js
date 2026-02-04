@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import supabase from "@/lib/supabase";
 import { STRIPE_URL } from "@/lib/consts";
 
 const BRAND = {
@@ -67,17 +67,16 @@ export default function DashboardPage() {
 
         if (!mounted) return;
 
-        setEmail(user.email || null);
+        const email = user.email || null;
+        setEmail(email);
 
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("paid")
-          .eq("id", user.id)
-          .single();
+        const hasPaid = email
+          ? (await fetch(`/api/entitlement?email=${encodeURIComponent(email)}`).then((r) => r.json()).then((d) => !!d?.isPaid))
+          : false;
 
         if (!mounted) return;
 
-        setPaid(Boolean(profile?.paid));
+        setPaid(hasPaid);
       } catch (e) {
         setPaid(false);
       } finally {

@@ -1,5 +1,3 @@
-"use client";
-
 export default function WhoFor() {
   const items = [
     { title: "SaaS startups", body: "No dedicated support team? Automate replies and triage today." },
