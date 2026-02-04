@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import supabase from "@/lib/supabase";
 import { STRIPE_URL } from "@/lib/consts";
 
 const BRAND = {
