@@ -1,5 +1,3 @@
-"use client";
-
 export default function SocialProof() {
   return (
     <section className="mt-12">

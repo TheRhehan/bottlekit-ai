@@ -80,6 +80,12 @@ export default function Home() {
           >
             Get started
           </Link>
+          <Link
+            href="/kit"
+            className="rounded-md border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20"
+          >
+            Go to Kit
+          </Link>
         </div>
 
         {/* Anti-risk / urgency microcopy under CTA */}
@@ -91,48 +97,151 @@ export default function Home() {
         {/* Who it's for (targeting band) */}
         <WhoFor />
 
-        {/* Feature tiles */}
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">Email-Drafter</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Draft customer replies in one click with thread context and your brand tone.
-            </p>
-          </div>
+        {/* Core Product Section — Zapier Kits */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-white">Core Product — Automation Kits</h2>
+          <p className="mt-2 text-slate-300">
+            Ready-to-deploy Zapier automation kits for your team. Click any link to review and install.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="https://zapier.com/shared/a1069af5783b0ed010ef9a6a95d3790cff028594"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Email-Drafter</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Drafts email replies automatically based on incoming messages and context.
+              </p>
+              <p className="mt-2 text-xs text-emerald-400 font-medium">View Zap →</p>
+            </a>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">Ticket-Triage</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Auto-tag, prioritize, and route support tickets to the right owner.
-            </p>
-          </div>
+            <a
+              href="https://zapier.com/shared/80d11bf46db39d1a253079845a8bc308720c86a4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Ticket-Triage</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Auto-routes incoming tickets to the correct Slack channel with priority and context.
+              </p>
+              <p className="mt-2 text-xs text-emerald-400 font-medium">View Zap →</p>
+            </a>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">Minutes Bot</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Upload meeting audio and get clean summaries, action items, and owners.
-            </p>
+            <a
+              href="https://zapier.com/shared/80747cc7d68fef7c91f3d8350bcedc728572ec62"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Minutes Bot</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Summarizes meeting notes and saves structured minutes into Notion.
+              </p>
+              <p className="mt-2 text-xs text-emerald-400 font-medium">View Zap →</p>
+            </a>
           </div>
+        </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">ROI Calculator</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Estimate hours saved and cost reduction from each kit to share with stakeholders.
-            </p>
-          </div>
+        {/* Support & Enablement Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-white">Support & Enablement</h2>
+          <p className="mt-2 text-slate-300">
+            Quick-start guides, video tutorials, and ROI tools to help you get the most value.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="https://drive.google.com/file/d/1XnSlamDdMrKkLMxmM7YCnHDGYKHu1ur-/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Quick-Start: Email PDF</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Step-by-step guide to set up Email-Drafter in your workflow.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Open PDF →</p>
+            </a>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">Quick-Start Zaps</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Prebuilt Zapier recipes to connect your tools in minutes—no prompt wrangling.
-            </p>
-          </div>
+            <a
+              href="https://drive.google.com/file/d/1RPeWl-BXa4VYNdLyV1gdPJnTdjZM_6Q2/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Quick-Start: Ticket PDF</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Fast setup for Ticket-Triage and integration with your support stack.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Open PDF →</p>
+            </a>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <h3 className="text-white">Guided Setup</h3>
-            <p className="mt-1 text-sm text-slate-300">
-              Short Looms walk you from zero to value. Hit “Open kit”.
-            </p>
+            <a
+              href="https://drive.google.com/file/d/1UQwMdqb_cWpddWPSBt-wuJlrhpDnt17F/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Quick-Start: Minutes PDF</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Get Minutes Bot up and running with your calendar and note-taking tools.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Open PDF →</p>
+            </a>
+
+            <a
+              href="https://docs.google.com/spreadsheets/d/1tDWoQfRtlBnBBgkxubew4bTq78p22JQuXzufNskWyD4/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">ROI Calculator</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Estimate hours saved and cost reduction to justify the investment to leadership.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Open Sheet →</p>
+            </a>
+
+            <a
+              href="https://www.loom.com/share/b6bd919be075401495293a6959c8cc90"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Loom Tutorial: Email</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Video walkthrough of Email-Drafter setup and best practices.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Watch Video →</p>
+            </a>
+
+            <a
+              href="https://www.loom.com/share/03849fc57c9545b4a9bbc8e1df1aa272"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Loom Tutorial: Ticket</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Video guide for Ticket-Triage configuration and Slack channel mapping.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Watch Video →</p>
+            </a>
+
+            <a
+              href="https://www.loom.com/share/8066bc82f3a542f8a43714bd0982523b"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/30 hover:bg-white/10 transition"
+            >
+              <h3 className="text-white font-semibold">Loom Tutorial: Minutes</h3>
+              <p className="mt-1 text-sm text-slate-300">
+                Video walkthrough of Minutes Bot connection and automated summary setup.
+              </p>
+              <p className="mt-2 text-xs text-sky-400 font-medium">Watch Video →</p>
+            </a>
           </div>
         </div>
 
