@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import supabase from "@/lib/supabase";
-import { STRIPE_URL } from "@/lib/consts";
+import { PRICING_PAGE_URL } from "@/lib/consts";
 
 const BRAND = {
   name: "BottleKit",
@@ -125,7 +125,7 @@ export default function DashboardPage() {
                     </span>
                   ) : (
                     <a
-                      href={STRIPE_URL}
+                      href={PRICING_PAGE_URL}
                       className="inline-flex items-center justify-center rounded-xl bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-sky-300 active:bg-sky-200"
                     >
                       Unlock Access
@@ -133,7 +133,7 @@ export default function DashboardPage() {
                   )}
 
                   <Link
-                    href="/"
+                    href="https://www.bottlekit.ai"
                     className="inline-flex items-center justify-center rounded-xl border border-slate-800 bg-[#070A12] px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-900/50"
                   >
                     Back to site
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                       </p>
                     </div>
                     <a
-                      href={STRIPE_URL}
+                      href={PRICING_PAGE_URL}
                       className="inline-flex items-center justify-center rounded-xl bg-sky-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-sky-300 active:bg-sky-200"
                     >
                       Go to Checkout
@@ -248,7 +248,7 @@ function Sidebar({ paid }) {
 
         {!paid && (
           <a
-            href={STRIPE_URL}
+            href={PRICING_PAGE_URL}
             className="mt-2 inline-flex items-center justify-center rounded-xl bg-sky-400 px-3 py-2 text-sm font-semibold text-slate-950 hover:bg-sky-300 active:bg-sky-200"
           >
             Unlock Access
@@ -285,11 +285,10 @@ function KitCard({ kit, locked }) {
         <button
           disabled={locked}
           onClick={() => window.open(kit.href, "_blank")}
-          className={`rounded-xl px-4 py-2 text-sm font-semibold ${
-            locked
-              ? "cursor-not-allowed border border-slate-800 bg-slate-900/40 text-slate-400"
-              : "bg-sky-400 text-slate-950 hover:bg-sky-300 active:bg-sky-200"
-          }`}
+          className={`rounded-xl px-4 py-2 text-sm font-semibold ${locked
+            ? "cursor-not-allowed border border-slate-800 bg-slate-900/40 text-slate-400"
+            : "bg-sky-400 text-slate-950 hover:bg-sky-300 active:bg-sky-200"
+            }`}
         >
           {locked ? "Locked" : "Open Kit"}
         </button>
