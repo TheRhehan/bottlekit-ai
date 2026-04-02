@@ -175,17 +175,6 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-
-            <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-              <MiniCard
-                title="Need help installing?"
-                body="If you want, I can add a simple “Setup Guide” section for each kit (2–4 steps)."
-              />
-              <MiniCard
-                title="Want a real portal later?"
-                body="This MVP is fine. Later we can replace Zapier links with a guided installer + usage tracking."
-              />
-            </div>
           </main>
         </div>
       </div>
@@ -226,7 +215,7 @@ function Sidebar({ paid }) {
 
       <div className="mt-3 grid gap-2">
         <Link
-          href="/"
+          href="https://www.bottlekit.ai/"
           className="rounded-xl border border-slate-800 bg-[#070A12] px-3 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-900/50"
         >
           Marketing Site
